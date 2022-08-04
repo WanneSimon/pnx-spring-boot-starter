@@ -73,11 +73,12 @@
 			<optional>true</optional>
 		</dependency>
 		
-		<!-- 引入 web 模块 -->
+		<!-- 引入 web 模块
 		<dependency>
         	<groupId>org.springframework.boot</groupId>
         	<artifactId>spring-boot-starter-web</artifactId>
  		</dependency>
+ 		 -->
 		
 		<!-- aop模块 -->
 		<dependency>

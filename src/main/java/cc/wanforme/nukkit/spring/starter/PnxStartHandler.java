@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import com.dfsek.tectonic.api.config.template.annotations.Value;
+
 import cc.wanforme.nukkit.spring.plugins.PluginContextHolder;
 import cc.wanforme.nukkit.spring.util.NukkitServerUtil;
 import cc.wanforme.nukkit.spring.util.ResourceSaver;
@@ -39,6 +41,9 @@ public class PnxStartHandler {
 	
 	private Thread subThread = null;
 	private boolean nukkitStarted = false;
+	
+	@Value("${spring.main.web-environment:false}")
+	private boolean webEnvironment;
 	
 	/** 监测并等待 nukkit 启动 */
 	protected void waitNukkit() {
@@ -106,8 +111,9 @@ public class PnxStartHandler {
 		contextHolder.loadPlugins();
 	}
 	
-	/** 启动 nukkit */
-	public void runNukkit(String... args) {
+	/** 启动 nukkit 
+	 * @throws InterruptedException */
+	public void runNukkit(String... args) throws InterruptedException {
 		this.beforeNukkitStart();
 		
 		Runnable nukkitTask = new Runnable() {
@@ -122,9 +128,12 @@ public class PnxStartHandler {
 		
 		this.waitNukkit();
 		this.afterNukkitStarted();
+		
 		// 非 web 应用，需要等待启动 nukkit 并阻塞当前线程
 		// normal application needs to block current thread.
-//		t.join(); 
+		if(!webEnvironment) {
+			t.join(); 
+		}
 	}
 	
 	/** 停止 nukkit */
