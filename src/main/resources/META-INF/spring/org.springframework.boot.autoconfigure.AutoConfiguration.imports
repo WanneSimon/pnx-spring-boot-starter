@@ -1,0 +1,4 @@
+cc.wanforme.nukkit.spring.NukkitSpringRunner
+cc.wanforme.nukkit.spring.starter.PnxStartHandler
+cc.wanforme.nukkit.spring.plugins.loader.ExtPluginLoader
+cc.wanforme.nukkit.spring.plugins.PluginContextHolder
