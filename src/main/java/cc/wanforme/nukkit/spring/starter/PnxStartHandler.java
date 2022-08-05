@@ -1,6 +1,5 @@
 package cc.wanforme.nukkit.spring.starter;
 
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -11,9 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-
-import com.dfsek.tectonic.api.config.template.annotations.Value;
 
 import cc.wanforme.nukkit.spring.plugins.PluginContextHolder;
 import cc.wanforme.nukkit.spring.util.NukkitServerUtil;
@@ -29,7 +27,7 @@ public class PnxStartHandler {
 	private static final Logger log = LoggerFactory.getLogger(PnxStartHandler.class);
 	/** nukkit启动前，内置的必须要保存到外部的文件*/ 
 	private static final String[] preSavingFiles = { 
-			"plugins/PMPlus.jar", 
+//			"plugins/PMPlus.jar", 
 	}; 
 	
 	@Autowired
@@ -42,8 +40,10 @@ public class PnxStartHandler {
 	private Thread subThread = null;
 	private boolean nukkitStarted = false;
 	
-	@Value("${spring.main.web-environment:false}")
-	private boolean webEnvironment;
+//	@Value("${spring.main.web-environment:false}")
+//	private boolean webEnvironment;
+	@Autowired
+	private Environment env;
 	
 	/** 监测并等待 nukkit 启动 */
 	protected void waitNukkit() {
@@ -131,9 +131,16 @@ public class PnxStartHandler {
 		
 		// 非 web 应用，需要等待启动 nukkit 并阻塞当前线程
 		// normal application needs to block current thread.
-		if(!webEnvironment) {
+		boolean webEnv = isWebEnv();
+		log.info("Running with " + (webEnv ? "web" : "non-web") + " environment.");
+		if(!webEnv) {
 			t.join(); 
 		}
+	}
+	
+	private boolean isWebEnv() {
+		String prop = env.getProperty("spring.main.web-environment");
+		return prop != null && "true".equals(prop.trim());
 	}
 	
 	/** 停止 nukkit */

@@ -154,7 +154,7 @@ public class PluginContextHolder implements ApplicationContextAware{
 				try {
 					return t.toURL();
 				} catch (MalformedURLException e) {
-					e.printStackTrace();
+					log.error("NSPlugin load error! ["+t.getPath()+"]", e);
 				}
 				return null;
 			}).filter(e -> e != null).collect(Collectors.toList());

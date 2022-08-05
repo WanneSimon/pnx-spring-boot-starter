@@ -3,25 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<!--
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.0.RELEASE</version>
-		-->
-		<groupId>org.springframework.boot</groupId>
-	    <artifactId>spring-boot-starter-parent</artifactId>
-	    <version>2.7.2</version>
-	    <!-- <version>2.6.10</version> -->
-	</parent>
-
 	<groupId>cc.wanforme.nukkit</groupId>
 	<artifactId>pnx-spring-boot-starter</artifactId>
 	<version>0.0.1</version>
-	<packaging>jar</packaging>
+<!-- 	<packaging>jar</packaging>-->
 
 
-	<name>wannukkit-spring-boot-starter</name>
+	<name>wannukkit-spring-boot-support</name>
 	<url>http://maven.apache.org</url>
 
 
@@ -36,14 +24,33 @@
 		<maven.compiler.compilerVersion>1.17</maven.compiler.compilerVersion>
 		<java.version>1.17</java.version>
 		<!-- <log4j-to-slf4j.version>2.11.1</log4j-to-slf4j.version>  -->
+		
+		<spring-boot.version>2.7.2</spring-boot.version>
+		<!--<slf4j.version>1.7.36</slf4j.version>-->
 		<powernukkitx.version>1.6.0.0-PNX</powernukkitx.version>
 	</properties>
+
+	
+	 <dependencyManagement>
+	    <dependencies>
+	      <dependency>
+			<groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-parent</artifactId>
+		    <version>${spring-boot.version}</version>
+	        <type>pom</type>
+	        <scope>import</scope>
+	      </dependency>
+	    </dependencies>
+	  </dependencyManagement>
+	  <!-- -->
 
 	<dependencies>
 		<!-- SpringBoot自带slf4j，但 nukkit 使用的是 log4j -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
+			<!--<version>${spring-boot.version}</version>-->
+			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
                     <groupId>org.springframework.boot</groupId>
@@ -51,29 +58,48 @@
                 </exclusion>
 			</exclusions>
 		</dependency>
+		
 		<!-- 引入log4j2依赖-->  
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>  
 		    <artifactId>spring-boot-starter-log4j2</artifactId>
+		    <!--<version>${spring-boot.version}</version>
+		    <scope>provided</scope>-->
 		</dependency>
+		
 		<dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <!--<version>${slf4j.version}</version>
+		    <scope>provided</scope>-->
         </dependency>
-				
+		
+		<dependency>
+            <groupId>cn.powernukkitx</groupId>
+            <artifactId>powernukkitx</artifactId>
+            <version>${powernukkitx.version}</version>
+            <scope>provided</scope>
+        </dependency>
+		
 		<!-- 指定gson为SpringBoot的版本 -->
+		<!--
         <dependency>
           <groupId>com.google.code.gson</groupId>
           <artifactId>gson</artifactId>
+          <scope>compile</scope>
         </dependency>
+        -->
 
+		<!-- 
  		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		-->
 		
-		<!-- 引入 web 模块
+		<!-- 引入 web 模块 -->
+		<!--
 		<dependency>
         	<groupId>org.springframework.boot</groupId>
         	<artifactId>spring-boot-starter-web</artifactId>
@@ -81,17 +107,21 @@
  		 -->
 		
 		<!-- aop模块 -->
+		<!--
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
+		-->
 		
  		<!-- 引入测试 -->
+ 		<!-- 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		-->
 		
 		<!-- live load. 热部署[1] -->
 		<!-- 
@@ -100,12 +130,6 @@
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
 		 -->
-
-        <dependency>
-            <groupId>cn.powernukkitx</groupId>
-            <artifactId>powernukkitx</artifactId>
-            <version>${powernukkitx.version}</version>
-        </dependency>
 	</dependencies>
 
 </project>
