@@ -1,6 +1,6 @@
 # wannukkit-springboot-starter
 SpringBoot Web starter for nukkit
-
+**这是文档是以前 `wannukkit-springboot-starter` 的旧文档**
 一款简单整合 nukkit 和 SpringBoot-web 的三方依赖
 
 
