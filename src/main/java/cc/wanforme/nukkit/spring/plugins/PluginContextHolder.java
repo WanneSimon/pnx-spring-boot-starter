@@ -177,7 +177,6 @@ public class PluginContextHolder implements ApplicationContextAware{
 		// 预先读取 pluginDescription， 并从中找出主类的所在位置。
 		// 主类的包即为 spring 自动扫描的目录
 		//（也就是说，主类必须在整个包的最外层目录下）
-		// TODO... 待优化
 		List<String> basePackage = new ArrayList<>(fs.size());
 		for (File file : fs) {
 			PluginDescription des = ExtPluginLoader.readPluginDescription(file);
@@ -209,7 +208,7 @@ public class PluginContextHolder implements ApplicationContextAware{
 		pluginContext.setParent(context);
 		
 		if(!basePackage.isEmpty()) {
-			pluginContext.scan();
+			pluginContext.scan(basePackage.toArray(new String[0]));
 		}
 		pluginContext.refresh();
 	}
@@ -253,15 +252,6 @@ public class PluginContextHolder implements ApplicationContextAware{
 			}
 		}
 		return fs;
-	}
-
-	public static void main(String[] args) {
-		String s = "nsplugins,target";
-		String[] arr = s.split("\\,");
-		System.out.println(Arrays.toString(s.split("\\,")));
-		for (String a : arr) {
-			System.out.println(a);
-		}
 	}
 	
 }
