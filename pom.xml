@@ -19,10 +19,10 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!-- 编译时的编码 -->
 		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-		<maven.compiler.source>1.17</maven.compiler.source>
-		<maven.compiler.target>1.17</maven.compiler.target>
-		<maven.compiler.compilerVersion>1.17</maven.compiler.compilerVersion>
-		<java.version>1.17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.compilerVersion>17</maven.compiler.compilerVersion>
+        <java.version>17</java.version>
 		<!-- <log4j-to-slf4j.version>2.11.1</log4j-to-slf4j.version>  -->
 		
 		<spring-boot.version>2.7.2</spring-boot.version>
