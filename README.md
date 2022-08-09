@@ -1,68 +1,63 @@
-# wannukkit-springboot-starter
-SpringBoot Web starter for nukkit
-**这是文档是以前 `wannukkit-springboot-starter` 的旧文档**
+# pnx-spring-boot-starter
+SpringBoot starter for power-nukkit
 一款简单整合 nukkit 和 SpringBoot-web 的三方依赖
 
+[开发Demo](https://github.com/WanneSimon/StarterDemo) 
+[插件Demo](https://github.com/WanneSimon/pnx-starter-demo.git)
 
+**目前正处于试验阶段**
 
-[开发Demo](https://github.com/WanneSimon/StarterDemo)，[nsplugin Demo](https://github.com/WanneSimon/StarterPluginDemo)
-
-**（目前正处于开发测试阶段）**
-
-为方便讲述，后面 nukkit-1.x 和 cloudburst 统称nukkit
+### 要求
+`jdk17`
 
 ### 功能
+1. 启动 `nukkit` ，但是 `spring` 不管理 `nukkit`。
+2. 保持 `nukkit` 原生，基于 `nukkit` 的插件依然可以使用。
+3. 支持 `web` 环境和 `non-web` 环境，默认为 `non-web` 环境。
+4. 基于 `spring` 注解注入的 `nukkit` 插件开发。
+5. ~~内置原nukkit插件 -- [PMPlus](https://github.com/WanneSimon/PMPlus/tree/2.0/build)（注：已支持cloudburst）~~
+6. 支持在启动前保存内部资源到外部，例如预置插件。
 
-1. 启动 nukkit 和 一个web 程序。**Spring 不管理 nukkit**
-2. 保持 nukkit 原生，基于 nukkit 的插件依然可以使用。
-3. 是否启动 nukkit 是可选。
-4. 基于 Spring 注解式的 nukkit 插件开发 -- nsplugin（现已支持指定多个路径）。
-5. 内置原nukkit插件 -- [PMPlus](https://github.com/WanneSimon/PMPlus/tree/2.0/build)（注：已支持cloudburst）。
-6. 支持在 nukkit 启动前保存内部资源到外部。例如预置插件。
+### 使用
 
+#### 安装到本地 maven
+``` mvn install ```
+#### 引入
+```xml
+<dependency>
+   <groupId>cc.wanforme.nukkit</groupId>
+   <artifactId>pnx-spring-boot-starter</artifactId>
+   <version>0.0.1</version>
+</dependency>
+```
+#### 运行
+需要添加以下 `vm` 参数
+```
+--add-opens java.base/java.lang.ClassLoader=ALL-UNNAMED
+```
 
-
-stater内部已经内置了 PMPlus（现在还有个问题没有修复），程序运行时就会保存。
-
-### 注意 
-
-1. ​	项目使用自定义日志输出，会覆盖原 nukkit 的日志配置，并且会导致 颜色代码 失效。
-
-2. **特别注意：使用 springboot 自己的打包插件，会导致 cloudburst 无法启动，但是对于 nukkit-1.x无影响(1.0分支的支持已经弃坑，很多功能无法使用)。**	
-
-   ​	具体情况：无法读取 nukkit 内部的语言配置等文件。
-
-   ​	原因：SpringBoot 不允许随意访问 jar 包内部的资源。
-
-   ​	解决方式：更换打包方式。pom.xml中添加打包插件 -- spring-boot-thin-maven-plugin，配置”在编译时下载依赖包“ ，将程序和依赖分离（具体查看 [demo](https://github.com/WanneSimon/StarterDemo)）。另一种方式（待验证）：启动 SpringBootApplication 前，自定义 ResourceLoader。
-
-3. cloudburst 已不再支持动态加载插件，PMPlus-2.0 没有解决这个问题。这个功能会被屏蔽，不予修复，保持 cloudburst 的规则。
-
-### 其它
-
-关于 nukkit 启动检测，使用的方法是依次检测 Server 实例和 PluginManager 实例。可以设置超时时间，不支持一直检测。
-
-
-
-### 仓库地址
-
-在 pom 中添加
-
-	<repositories>
-		<repository>
-			<id>nukkitx-repo</id>
-			<!-- <url>https://repo.nukkitx.com/snapshot/</url> -->
-			<url>http://www.repo.wanforme.cc/repository/nukkit/</url>
-		</repository>
-	</repositories>
-或者，
-
-你也可以 wannukkit-stpringboot 来搭建项目了，项目搭建更简单。添加父项目，需要使用上面的仓库地址。
-
-详细参考 [StarterDemo](https://github.com/WanneSimon/StarterDemo)（已更新）。
-
-	<parent>
-	  <groupId>cc.wanforme.nukkit</groupId>
-	  <artifactId>wannnukkit-springboot</artifactId>
-	  <version>1.0.0</version>
-	</parent>
+### 配置说明
+```yml
+nukkit:
+   spring:
+    # 启用 nukkit 相关模块
+    # enable nukkit module
+    enable: true
+    # 是否一同启动 nukkit
+    # run nukkit after launch app
+    start-nukkit: true
+    # 使用 spring 注解注入编写的 nukkit 插件的位置 （支持jar 和 字节码形式的）
+    # plugins' location written with spring ( jar and classes supported )
+    # nsplugins - 默认的存放位置， target - 开发环境中maven项目的输出位置，用于开发测试。
+    nukkit-spring-plugin-location: nsplugins,target
+    # 监听 nukkit 启动的间隔（ms）
+    # 内部启动了一个子线程运行 nukkit ，通过检查 Server 实例和 PluginManager 实例来确认是否启动完成。 
+    listenTick: 500
+    # 监听 nukkit 启动的超时时间（ms）
+    listenTimeOut: 10000
+    # 保存到外部的资源目录（ nukkit 启动前）
+    # plugins/ - nukkit 的原生插件目录
+    # config/ - springboot 的配置
+    # 注：文件夹需要以 '/' 结尾
+    savingFilesBeforeNukkit: plugins/, config/, log4j2-spring.xml
+```

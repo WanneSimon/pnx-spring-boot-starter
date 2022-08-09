@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
-import org.jline.utils.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,7 @@ public class PnxStartHandler {
 	/** 监测并等待 nukkit 启动 */
 	protected void waitNukkit() {
 		if(!properties.isEnable()) {
-			Log.warn("nukkit is not enabled!");
+			log.warn("nukkit is not enabled!");
 			return;
 		}
 		
@@ -123,7 +122,14 @@ public class PnxStartHandler {
 			}
 		};
 		
+		
 		Thread t = new Thread(nukkitTask);
+		ClassLoader cl = t.getContextClassLoader();
+		while(cl != null) {
+			System.out.println("classLoader:" + cl);
+			cl = cl.getParent();
+		}
+		
 		t.start();
 		
 		this.waitNukkit();

@@ -1,3 +1,5 @@
+package cc.wanforme.nukkit.spring;
+
 import java.io.File;
 import java.io.IOException;
 
