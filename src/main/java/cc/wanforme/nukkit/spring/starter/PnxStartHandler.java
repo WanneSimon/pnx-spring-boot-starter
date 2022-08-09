@@ -124,12 +124,6 @@ public class PnxStartHandler {
 		
 		
 		Thread t = new Thread(nukkitTask);
-		ClassLoader cl = t.getContextClassLoader();
-		while(cl != null) {
-			System.out.println("classLoader:" + cl);
-			cl = cl.getParent();
-		}
-		
 		t.start();
 		
 		this.waitNukkit();
