@@ -2,8 +2,8 @@
 SpringBoot starter for power-nukkit
 一款简单整合 nukkit 和 SpringBoot-web 的三方依赖
 
-[开发Demo](https://github.com/WanneSimon/StarterDemo) 
-[插件Demo](https://github.com/WanneSimon/pnx-starter-demo.git)
+[开发Demo](https://github.com/WanneSimon/pnx-starter-demo.git) 
+[插件Demo](https://github.com/WanneSimon/pnx-starter-plugin-demo.git)
 
 **目前正处于试验阶段**
 
