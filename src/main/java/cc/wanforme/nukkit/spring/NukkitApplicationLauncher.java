@@ -16,15 +16,18 @@ public class NukkitApplicationLauncher {
 	public static String serverFullAddress = ""; //
 	
 	public static void launchNukkit(Class<?> appClazz, String...args) {
-//		Environment env = SpringApplication.run(appClazz, args).getEnvironment();
 
 		SpringApplication app = new SpringApplication(appClazz);
-//		app.setResourceLoader(new BootApplicationResourceLoader());
-		Environment env = app.run(args).getEnvironment();
-		logApplicationStartup(env);
+		app.run(args).getEnvironment();
+		
+//		Environment env = app.run(args).getEnvironment();
+//		boolean isWeb = app.getWebApplicationType() != WebApplicationType.NONE;
+//		if(isWeb) {
+//			logApplicationStartup(env);
+//		}
 	}
 	
-    private static void logApplicationStartup(Environment env) {
+    protected static void logApplicationStartup(Environment env) {
         String protocol = "http";
         if (env.getProperty(SERVER_SSL_KEY_STORE) != null) {
             protocol = "https";
@@ -55,6 +58,5 @@ public class NukkitApplicationLauncher {
             protocol, hostAddress, serverPort, contextPath,
             env.getActiveProfiles());
     }
-    
     
 }

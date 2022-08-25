@@ -6,6 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -131,6 +136,10 @@ public class ResourceSaver {
 			Enumeration<? extends ZipEntry> entries = zFile.entries();
 			while(entries.hasMoreElements()) {
 				ZipEntry en = entries.nextElement();
+				if(en.isDirectory()) {
+					continue;
+				}
+				
 				// 在 zip 中的路径
 				String enName = en.toString();
 				// 临时判断用
@@ -191,8 +200,12 @@ public class ResourceSaver {
 	 * @param plugin 插件对象
 	 * @param dir 需要解压保存的路径 （例如插件内部的语言文件夹： configs/lang/）
 	 * @throws IOException */
-	public static void savePluginResources(Plugin plugin, String dir) throws IOException{
-		savePluginResources(plugin, dir, false);
+	public static void savePluginResources(Plugin plugin, String dir) {
+		try {
+			savePluginResources(plugin, dir, false);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	/** 解压插件中某个文件夹所有资源到外部( 保存插件的内部资源)
@@ -206,8 +219,45 @@ public class ResourceSaver {
 		File source = new File(f);
 		File outDir = plugin.getDataFolder();
 
-		// 保险起见，按 SpringBoot jar进行处理
-		saveBootResources(source, outDir, dir, false);
+		// 开发环境下，源文件是文件夹；例如: F:\git_repos\ns-world\target\classes
+//		System.out.println("source:" + source.getPath());
+//		System.out.println("outDir:" + outDir.getPath());
+		if(source.isDirectory()) {
+			File saveRoot = new File(f, dir);
+			String strSourceRoot = source.getPath(); // F:\git_repos\ns-world\target\classes
+			
+//			System.out.println("saveRoot:" + saveRoot.getPath());
+//			System.out.println("strSourceRoot:" + strSourceRoot);
+			
+			// 保存指定目录下所有文件
+			Files.walkFileTree(saveRoot.toPath(), new SimpleFileVisitor<Path>() {
+	            @Override
+	            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+	            	String tPath = file.toFile().getPath(); // F:\git_repos\ns-world\target\classes\lang\chs.yml
+	            	String subPath = tPath.replace(strSourceRoot, ""); // \lang\chs.yml
+	            	
+	            	Path outFile = new File(outDir, subPath).toPath(); // F:\git_repos\ns-world\target\ns-world\lang\chs.yml
+	            	Files.createDirectories(outFile.getParent());
+	            	
+	            	if(replace) {
+	            		Files.deleteIfExists(outFile);
+	            		Files.copy(file, outFile);
+	            	} else if(!Files.exists(outFile)) {
+	            		Files.copy(file, outFile);
+	            	}
+	            	
+	                return FileVisitResult.CONTINUE;
+	            }
+	            @Override
+	            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+	                return FileVisitResult.CONTINUE;
+	            }
+	        });
+			
+		} else {
+			// 保险起见，按 SpringBoot jar进行处理
+			saveBootResources(source, outDir, dir, false);			
+		}
 	}
 	
 }

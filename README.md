@@ -13,7 +13,7 @@ SpringBoot starter for power-nukkit
 ### 功能
 1. 启动 `nukkit` ，但是 `spring` 不管理 `nukkit`。
 2. 保持 `nukkit` 原生，基于 `nukkit` 的插件依然可以使用。
-3. 支持 `web` 环境和 `non-web` 环境，默认为 `non-web` 环境。
+3. 支持 `web` 环境和 ~~`non-web` 环境（待测试）~~，默认为 `non-web` 环境。
 4. 基于 `spring` 注解注入的 `nukkit` 插件开发。
 5. ~~内置原nukkit插件 -- [PMPlus](https://github.com/WanneSimon/PMPlus/tree/2.0/build)（注：已支持cloudburst）~~
 6. 支持在启动前保存内部资源到外部，例如预置插件。
@@ -33,8 +33,10 @@ SpringBoot starter for power-nukkit
 #### 运行
 需要添加以下 `vm` 参数
 ```
---add-opens java.base/java.lang.ClassLoader=ALL-UNNAMED
+--add-opens java.base/java.lang=ALL-UNNAMED
 ```
+
+**无法启动或运行过程中报错（特别是模块），请根据 pnx 官方给出的[参数](https://github.com/PowerNukkitX/PowerNukkitX#%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4)进行调整**
 
 ### 配置说明
 ```yml

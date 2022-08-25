@@ -131,13 +131,16 @@ public class PnxStartHandler {
 		
 		// 非 web 应用，需要等待启动 nukkit 并阻塞当前线程
 		// normal application needs to block current thread.
-		boolean webEnv = isWebEnv();
-		log.info("Running with " + (webEnv ? "web" : "non-web") + " environment.");
-		if(!webEnv) {
+//		boolean webEnv = isWebEnv();
+//		log.info("Running with " + (webEnv ? "web" : "non-web") + " environment.");
+//		if(!webEnv) {
+		    // TODO compatible with web-environment ? 
 			t.join(); 
-		}
+//		}
 	}
 	
+	@Deprecated
+	@SuppressWarnings("unused")
 	private boolean isWebEnv() {
 		String prop = env.getProperty("spring.main.web-environment");
 		return prop != null && "true".equals(prop.trim());

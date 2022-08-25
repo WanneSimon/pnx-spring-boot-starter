@@ -67,7 +67,7 @@ public abstract class PluginLangHolder {
 		// 保存jar内部的语言文件到数据文件夹内 (pluginDataFolder)
 		try {
 			ResourceSaver.savePluginResources(plugin, basePackage);
-		} catch (IOException e) {
+		} catch (RuntimeException e) {
 			log.info("cound not save nsplugin ["+plugin.getName()+"] languages folder!" , e);
 			throw new RuntimeException();
 		}
@@ -170,7 +170,7 @@ public abstract class PluginLangHolder {
 	
 	/** 获取文件中配置的语言*/
 	public String get(String key) {
-		return getCurrentConfig().getString(key);
+		return this.get(key, "{"+key+"}");
 	}
 	
 	/** 获取文件中配置的语言*/
