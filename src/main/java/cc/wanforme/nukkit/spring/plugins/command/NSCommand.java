@@ -1,9 +1,9 @@
 package cc.wanforme.nukkit.spring.plugins.command;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
@@ -17,7 +17,7 @@ public abstract class NSCommand {
 	/** 主指令*/
 	private String main;
 	/** 固定长度参数的指令处理器*/ 
-	private Set<FixedArgumentsHandler> fixedArgsHandlers = new TreeSet<>(); // 升序
+	private Set<FixedArgumentsHandler> fixedArgsHandlers = new HashSet<>(); // 升序
 	
 	public NSCommand(String main) {
 		this.main = main;
@@ -27,8 +27,6 @@ public abstract class NSCommand {
 	protected abstract void initCommand();
 	
 	/** 只处理完全相等的指令，有任何差异都返回处理失败<br>
-	 * 你的指令设计非常重要！！！指令尽量不要复用！！！<br>
-	 * 例如：1. 输入的指令末尾多了一个参数；2.输入的指令少了一个参数
 	 * @param sender
 	 * @param command
 	 * @param label
@@ -38,7 +36,11 @@ public abstract class NSCommand {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		FixedArgumentsHandler handler = this.getFixedArgumentsHandler(command, args);
 		if(handler!=null) {
-			return handler.onCommand(sender, command, label, args);
+			boolean re = handler.onCommand(sender, command, label, args);
+			if(!re) {
+				sender.sendMessage(handler.getUsage());
+			}
+			return true;
 		}
 		return false;
 	}
@@ -47,11 +49,11 @@ public abstract class NSCommand {
 		return main;
 	}
 	
-	public void addFixedArgumentsHandler(FixedArgumentsHandler handler) {
+	public void addHandler(FixedArgumentsHandler handler) {
 		fixedArgsHandlers.add(handler);
 	}
 	
-	public void addFixedArgumentsHandlers(List<FixedArgumentsHandler> handlers) {
+	public void addHandlers(List<FixedArgumentsHandler> handlers) {
 		fixedArgsHandlers.addAll(handlers);
 	}
 	

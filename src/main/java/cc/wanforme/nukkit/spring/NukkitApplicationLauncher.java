@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 
@@ -18,13 +19,13 @@ public class NukkitApplicationLauncher {
 	public static void launchNukkit(Class<?> appClazz, String...args) {
 
 		SpringApplication app = new SpringApplication(appClazz);
-		app.run(args).getEnvironment();
+//		app.run(args);
 		
-//		Environment env = app.run(args).getEnvironment();
-//		boolean isWeb = app.getWebApplicationType() != WebApplicationType.NONE;
-//		if(isWeb) {
-//			logApplicationStartup(env);
-//		}
+		Environment env = app.run(args).getEnvironment();
+		boolean isWeb = app.getWebApplicationType() != WebApplicationType.NONE;
+		if(isWeb) {
+			logApplicationStartup(env);
+		}
 	}
 	
     protected static void logApplicationStartup(Environment env) {

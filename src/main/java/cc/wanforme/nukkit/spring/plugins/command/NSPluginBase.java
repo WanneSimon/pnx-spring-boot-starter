@@ -1,5 +1,6 @@
 package cc.wanforme.nukkit.spring.plugins.command;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,9 +37,16 @@ public abstract class NSPluginBase extends PluginBase {
 		super.onDisable();
 	}
 
-	/** 根据主命令去执行相应的指令*/
+	/** 根据主命令去执行相应的指令 <br>
+	 * 更多说明参阅 {@link cn.nukkit.command.CommandExecutor#onCommand(CommandSender, Command, String, String[])}
+	 * @param sender 发送命令的对象
+	 * @param command 发送的命令。command.getName() 无论什么时候获取到的都是原始主命令（非别名）
+	 * @param label 实际发送的命令。可能是原始主命令，也可能是主命令的别名
+	 * @param args 主命令后面的参数，使用空格隔开的字符串。
+	 */
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		getLogger().debug("\ncommand:" + command.getName() +", label:" + label +", args:" + Arrays.asList(args));
 		NSCommand multiCommandHandler = mainCommands.get(command.getName());
 		if(multiCommandHandler!=null) {
 			return multiCommandHandler.onCommand(sender, command, label, args);
@@ -48,7 +56,8 @@ public abstract class NSPluginBase extends PluginBase {
 	
 	/** 添加一个主指令处理器，并调用 initCommand 进行初始化*/
 	@SuppressWarnings("unchecked")
-	public void registerNSCommand(String main, NSCommand mutilCommandHandler) {
+	public void registerNSCommand(NSCommand mutilCommandHandler) {
+		String main = mutilCommandHandler.getMain();
 		mutilCommandHandler.initCommand();
 		mainCommands.put(main, mutilCommandHandler);
 
@@ -61,5 +70,4 @@ public abstract class NSPluginBase extends PluginBase {
 			}
 		}
 	}
-	
 }

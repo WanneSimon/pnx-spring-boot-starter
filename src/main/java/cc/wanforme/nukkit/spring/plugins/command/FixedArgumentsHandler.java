@@ -6,10 +6,10 @@ import java.util.regex.Pattern;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 
-/** 固定长度的指令处理器,动态指令使用 {{}} 进行包裹<br>
+/** 固定长度的指令处理器,动态指令使用 {} 进行包裹<br>
  * 例如：<br>
  * 完全固定的指令：/cm test <br>
- * 部分是动态的指令： /cm send {{player}} <br>
+ * 部分是动态的指令： /cm send {player} <br>
  * @author wanne
  * 2020年7月22日
  */
@@ -21,10 +21,11 @@ public abstract class FixedArgumentsHandler implements Comparable<FixedArguments
 	// 其它正数表示，相似
 	
 	/** 参数部分
-	 * 例如："/cm send {{name}} {{msg}}", args 就是 "send {{name}} {{msg}}" 这部分 , "cm" 就是 main
+	 * 例如："/cm send {name} {msg}", args 就是 "send {name} {msg}" 这部分 , "cm" 就是 main
+	 * 注： cm 没有后面的参数时， args 是长度为0的空数组
 	 */
 	
-//	private String main; // main没啥用
+	private String main; // main没啥用
 	private String[] args ;
 	// 替代符
 	private Pattern p = null;
@@ -34,9 +35,10 @@ public abstract class FixedArgumentsHandler implements Comparable<FixedArguments
 //		this.args = args;
 //		p =  Pattern.compile("\\{\\{.*\\}\\}");
 //	}
-	public FixedArgumentsHandler(String... args) {
-		this.args = args;
-		p =  Pattern.compile("\\{\\{.*\\}\\}");
+	public FixedArgumentsHandler(String main, String[] args) {
+		this.main = main;
+		this.args = args==null ? new String[0] : args;
+		p =  Pattern.compile("\\{.*\\}");
 	}
 	
 	public abstract boolean onCommand(CommandSender sender, Command command, String label, String[] args) ;
@@ -61,7 +63,7 @@ public abstract class FixedArgumentsHandler implements Comparable<FixedArguments
 		
 		for(int i=0; i<args.length; i++) {
 			Matcher matcher = p.matcher(args[i]);
-			// 是占位符直接跳过，不是占位符必须要相等
+			// 占位符跳过，非占位符必须相等
 			if(!matcher.matches()) {
 				if(!args[i].equals(arguments[i])) {
 					return i == 0 ? DIFFERRENT : i;
@@ -78,19 +80,8 @@ public abstract class FixedArgumentsHandler implements Comparable<FixedArguments
 		return 0;
 	}
 	
-	
-	public static void main(String[] args) {
-		Pattern p =  Pattern.compile("\\{\\{.*\\}\\}");
-		
-		String[] arr = { "{{abb}}", "aa{{bb}cc", "aaa{{}}", "{{}}bb",
-				"aa{{bb}}", "aa{{}}cc", "{{bb}}cc", "{{cb}}", "{{}}"
-		};
-		
-		for (String s : arr) {
-			if(p.matcher(s).matches()) {
-				System.out.println(s);
-			}
-		}
+	public String getUsage() {
+		return "/" + this.main + " " + String.join(" ", args);
 	}
-
+	
 }
