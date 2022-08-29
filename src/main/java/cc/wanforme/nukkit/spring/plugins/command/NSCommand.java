@@ -17,7 +17,7 @@ public abstract class NSCommand {
 	/** 主指令*/
 	private String main;
 	/** 固定长度参数的指令处理器*/ 
-	private Set<FixedArgumentsHandler> fixedArgsHandlers = new HashSet<>(); // 升序
+	private Set<ArgumentsHandler> fixedArgsHandlers = new HashSet<>(); // 升序
 	
 	public NSCommand(String main) {
 		this.main = main;
@@ -34,7 +34,7 @@ public abstract class NSCommand {
 	 * @return
 	 */
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		FixedArgumentsHandler handler = this.getFixedArgumentsHandler(command, args);
+		ArgumentsHandler handler = this.getArgumentsHandler(command, args);
 		if(handler!=null) {
 			boolean re = handler.onCommand(sender, command, label, args);
 			if(!re) {
@@ -49,18 +49,18 @@ public abstract class NSCommand {
 		return main;
 	}
 	
-	public void addHandler(FixedArgumentsHandler handler) {
+	public void addHandler(FixedArgsHandler handler) {
 		fixedArgsHandlers.add(handler);
 	}
 	
-	public void addHandlers(List<FixedArgumentsHandler> handlers) {
+	public void addHandlers(List<FixedArgsHandler> handlers) {
 		fixedArgsHandlers.addAll(handlers);
 	}
 	
 	/** 精准匹配指令*/ 
-	protected FixedArgumentsHandler getFixedArgumentsHandler(Command command, String[] args) {
-		for (FixedArgumentsHandler handler : fixedArgsHandlers) {
-			if(handler.similarityWith(args) == FixedArgumentsHandler.EQUAL) {
+	protected ArgumentsHandler getArgumentsHandler(Command command, String[] args) {
+		for (ArgumentsHandler handler : fixedArgsHandlers) {
+			if(handler.similarityWith(args) == FixedArgsHandler.EQUAL) {
 				return handler;
 			}
 		}
@@ -68,10 +68,10 @@ public abstract class NSCommand {
 	}
 	
 	/** 匹配相似的指令*/
-	protected List<FixedArgumentsHandler> getSimilarFixedArgumentsHandlers(Command command, String[] args) {
-		List<FixedArgumentsHandler> similar = new ArrayList<>();
-		for (FixedArgumentsHandler handler : fixedArgsHandlers) {
-			if(handler.similarityWith(args) >= FixedArgumentsHandler.EQUAL) {
+	protected List<ArgumentsHandler> getSimilarArgumentsHandlers(Command command, String[] args) {
+		List<ArgumentsHandler> similar = new ArrayList<>();
+		for (ArgumentsHandler handler : fixedArgsHandlers) {
+			if(handler.similarityWith(args) >= FixedArgsHandler.EQUAL) {
 				similar.add(handler);
 			}
 		}
