@@ -4,6 +4,7 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 
 /** 指令参数处理器父类<br>
+ * 匹配输入的指令时，从左往右依次进行，遇到第一个不匹配时停止检查。
  * @author wanne
  * 2022-08-29
  */

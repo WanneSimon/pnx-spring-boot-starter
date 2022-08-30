@@ -52,7 +52,7 @@ public abstract class FixedOrderHandler extends ArgumentsHandler {
 			if(optPat.matcher(placeholder).matches()) {
 				String _placeholder = placeholder.substring(1, placeholder.length()-1);
 				// 没有候选参数，视为 任意值均可
-				if("".equals(_placeholder)) {
+				if("".equals(_placeholder) || !_placeholder.contains("|")) {
 					continue;
 				}
 				
