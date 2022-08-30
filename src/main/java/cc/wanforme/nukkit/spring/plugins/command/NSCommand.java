@@ -49,11 +49,11 @@ public abstract class NSCommand {
 		return main;
 	}
 	
-	public void addHandler(FixedArgsHandler handler) {
+	public void addHandler(ArgumentsHandler handler) {
 		fixedArgsHandlers.add(handler);
 	}
 	
-	public void addHandlers(List<FixedArgsHandler> handlers) {
+	public void addHandlers(List<? extends ArgumentsHandler> handlers) {
 		fixedArgsHandlers.addAll(handlers);
 	}
 	
