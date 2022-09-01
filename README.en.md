@@ -1,27 +1,27 @@
 # pnx-spring-boot-starter
 SpringBoot starter for power-nukkit  
-[[中文]](README.md) [[english]](README.en.md)  
+[[中文]](README.md) [[english]](README.en.md)
 
-[开发Demo](https://github.com/WanneSimon/pnx-starter-demo.git) 
-[插件Demo](https://github.com/WanneSimon/pnx-starter-plugin-demo.git)
+[dev Demo](https://github.com/WanneSimon/pnx-starter-demo.git)   
+[plugin Demo](https://github.com/WanneSimon/pnx-starter-plugin-demo.git)
 
-下面所有 `nukkit` 均指代 `PowerNukkitX`
-### 要求
+All `nukkit` below refer to `PowerNukkitX`
+### Environment
 `jdk17`
 
-### 功能
-1. 启动 `nukkit` ，但是 `spring` 不管理 `nukkit`。
-2. 保持 `nukkit` 原生，基于 `nukkit` 的插件依然可以使用。
-3. 支持 `web` 环境和 ~~`non-web` 环境（待测试）~~，默认为 `non-web` 环境。
-4. 基于 `spring` 注解注入的 `nukkit` 插件开发。
-5. ~~内置原nukkit插件 -- [PMPlus](https://github.com/WanneSimon/PMPlus/tree/2.0/build)（注：已支持cloudburst）~~
-6. 支持在启动前保存内部资源到外部，例如预置插件。
+### What can it do
+1. Launch `nukkit`。
+2. Noninvasive, you can still use nukkit's plugin.
+3. Support `spring` annotations while developing plugins.
+4. Ignore this. ~~内置原nukkit插件 -- [PMPlus](https://github.com/WanneSimon/PMPlus/tree/2.0/build)（注：cloudburst）~~
+5. Saving resources before running `nukkit`, such as plugins。
 
-### 使用
+### Usage
 
-#### 安装到本地 maven
+#### Install pnx-spring-boot-starter
+I'm tring to upload to maven central.
 ``` mvn install ```
-#### 引入
+#### Import library
 ```xml
 <dependency>
    <groupId>cc.wanforme.nukkit</groupId>
@@ -29,18 +29,19 @@ SpringBoot starter for power-nukkit
    <version>0.0.1</version>
 </dependency>
 ```
-#### 运行
-需要添加以下 `vm` 参数
+#### Run
+add `vm` option 
 ```
 --add-opens java.base/java.lang=ALL-UNNAMED
 ```
 
-**无法启动或运行过程中报错（特别是模块），请根据 pnx 官方给出的[参数](https://github.com/PowerNukkitX/PowerNukkitX#%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4)进行调整**
+**See [`pnx` page](https://github.com/PowerNukkitX/PowerNukkitX#%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4) 
+If you have a startup problem, Especially about `java module`**
 
-### 配置说明
+### Spring Boot Config
 ```yml
 nukkit:
-  spring:
+   spring:
     # 启用 nukkit 相关模块
     # enable nukkit module
     enable: true
@@ -67,5 +68,5 @@ nukkit:
     savingFilesBeforeNukkit: plugins/
 ```
 
-### 插件开发
-[插件文档](nsplugin-doc.md)
+### dev nsplugin
+[nsplugin-doc](nsplugin-doc.en.md)
