@@ -18,9 +18,9 @@ All `nukkit` below refer to `PowerNukkitX`
 
 ### Usage
 
-#### Install pnx-spring-boot-starter
-I'm tring to upload to maven central.
-``` mvn install ```
+~~#### Install pnx-spring-boot-starter~~
+~~I'm tring to upload to maven central.~~
+~~``` mvn install ```~~
 #### Import library
 ```xml
 <dependency>

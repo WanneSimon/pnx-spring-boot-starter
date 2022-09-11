@@ -1,15 +1,19 @@
 # pnx-spring-boot-starter
-SpringBoot starter for power-nukkit  
+
+SpringBoot starter for PowerNukkitX  
 [[中文]](README.md) [[english]](README.en.md)  
 
 [开发Demo](https://github.com/WanneSimon/pnx-starter-demo.git) 
 [插件Demo](https://github.com/WanneSimon/pnx-starter-plugin-demo.git)
 
 下面所有 `nukkit` 均指代 `PowerNukkitX`
+
 ### 要求
+
 `jdk17`
 
 ### 功能
+
 1. 启动 `nukkit` ，但是 `spring` 不管理 `nukkit`。
 2. 保持 `nukkit` 原生，基于 `nukkit` 的插件依然可以使用。
 3. 支持 `web` 环境和 ~~`non-web` 环境（待测试）~~，默认为 `non-web` 环境。
@@ -18,19 +22,23 @@ SpringBoot starter for power-nukkit
 6. 支持在启动前保存内部资源到外部，例如预置插件。
 
 ### 使用
-
-#### 安装到本地 maven
-``` mvn install ```
+~~安装到本地 maven~~
+~~mvn install~~
+  
 #### 引入
+
 ```xml
 <dependency>
    <groupId>cc.wanforme.nukkit</groupId>
    <artifactId>pnx-spring-boot-starter</artifactId>
-   <version>0.0.1</version>
+   <version>0.1.0</version>
 </dependency>
 ```
+
 #### 运行
+
 需要添加以下 `vm` 参数
+
 ```
 --add-opens java.base/java.lang=ALL-UNNAMED
 ```
@@ -38,6 +46,7 @@ SpringBoot starter for power-nukkit
 **无法启动或运行过程中报错（特别是模块），请根据 pnx 官方给出的[参数](https://github.com/PowerNukkitX/PowerNukkitX#%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4)进行调整**
 
 ### 配置说明
+
 ```yml
 nukkit:
   spring:
@@ -68,4 +77,5 @@ nukkit:
 ```
 
 ### 插件开发
+
 [插件文档](nsplugin-doc.md)
