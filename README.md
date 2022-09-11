@@ -25,14 +25,31 @@ SpringBoot starter for PowerNukkitX
 ~~安装到本地 maven~~
 ~~mvn install~~
   
+
 #### 引入
 
 ```xml
-<dependency>
-   <groupId>cc.wanforme.nukkit</groupId>
-   <artifactId>pnx-spring-boot-starter</artifactId>
-   <version>0.1.0</version>
-</dependency>
+  <repositories>
+      <repository>
+          <id>ossrh</id>
+          <name>ossrh</name>
+          <url>https://s01.oss.sonatype.org/content/repositories/releases/</url>
+          <releases>
+              <enabled>true</enabled>
+          </releases>
+          <snapshots>
+              <enabled>false</enabled>
+          </snapshots>
+      </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>cc.wanforme.nukkit</groupId>
+      <artifactId>pnx-spring-boot-starter</artifactId>
+      <version>0.1.0</version>
+    </dependency>
+  </dependencies>
 ```
 
 #### 运行

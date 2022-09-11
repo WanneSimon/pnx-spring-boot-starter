@@ -23,11 +23,27 @@ All `nukkit` below refer to `PowerNukkitX`
 ~~``` mvn install ```~~
 #### Import library
 ```xml
-<dependency>
-   <groupId>cc.wanforme.nukkit</groupId>
-   <artifactId>pnx-spring-boot-starter</artifactId>
-   <version>0.0.1</version>
-</dependency>
+  <repositories>
+      <repository>
+          <id>ossrh</id>
+          <name>ossrh</name>
+          <url>https://s01.oss.sonatype.org/content/repositories/releases/</url>
+          <releases>
+              <enabled>true</enabled>
+          </releases>
+          <snapshots>
+              <enabled>false</enabled>
+          </snapshots>
+      </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>cc.wanforme.nukkit</groupId>
+      <artifactId>pnx-spring-boot-starter</artifactId>
+      <version>0.1.0</version>
+    </dependency>
+  </dependencies>
 ```
 #### Run
 add `vm` option 
@@ -35,8 +51,7 @@ add `vm` option
 --add-opens java.base/java.lang=ALL-UNNAMED
 ```
 
-**See [`pnx` page](https://github.com/PowerNukkitX/PowerNukkitX#%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4) 
-If you have a startup problem, Especially about `java module`**
+**See [`pnx` page](https://github.com/PowerNukkitX/PowerNukkitX#%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4) If you have a startup problem, Especially about `java module`**
 
 ### Spring Boot Config
 ```yml
@@ -50,8 +65,8 @@ nukkit:
     start-nukkit: true
     # 使用 spring 注解注入编写的 nukkit 插件的位置 （支持jar 和 字节码形式的）
     # nsplugins - 默认的存放位置， target - 开发环境中maven项目的输出位置，用于开发测试。
-    # plugins' location written with spring annotation ( jar and classes supported )
-    # nsplugins - the default location, target - maven output folder (for develop plugins)
+    # plugins' location written with spring annotation ( jar and classes are supported )
+    # nsplugins - the default location, target - maven output folder (for developing plugins)
     nukkit-spring-plugin-location: nsplugins,target
     # 监听 nukkit 启动的间隔（ms）
     # 内部启动了一个子线程运行 nukkit ，通过检查 Server 实例和 PluginManager 实例来确认是否启动完成。 
