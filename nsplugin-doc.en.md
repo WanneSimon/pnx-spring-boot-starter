@@ -1,7 +1,7 @@
 [[中文]](nsplugin-doc.md)  [[english]](nsplugin-doc.en.md)
 
-## Multilingual
-
+## Multilingual  
+  
 The language file type - `.yml`, the files are locate in sub-folder `lang` below plugin's data folder, 
 language type is `en`.  
 The final location is `lang/en.yml`.  
@@ -14,7 +14,7 @@ super(plugin, ConfigFileType.YML, "lang/", `en`);
 [e.g：ns-world](https://github.com/WanneSimon/ns-world/tree/main/src/main/java/cc/wanforme/nukkit/nsworld/nsworld/LangHolder.java)  
 
 ## NSPluginBase
-
+  
 `NSPluginBase` is  a plugin's super class provided by `nsplugin` .  
 It extends `PluginBase`,  and handles command's args by NSCommand 。当然，不是一定要继承此类。
 
