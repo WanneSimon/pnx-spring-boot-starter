@@ -11,7 +11,7 @@
 
     <groupId>cc.wanforme.nukkit</groupId>
     <artifactId>pnx-spring-boot-starter</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 
 
     <name>pnx-spring-boot-starter</name>
@@ -100,11 +100,15 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>  
             <artifactId>spring-boot-starter-log4j2</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         
         <dependency>
@@ -112,6 +116,7 @@
             <artifactId>powernukkitx</artifactId>
             <version>${powernukkitx.version}</version>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         
     </dependencies>
