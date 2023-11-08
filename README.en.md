@@ -85,3 +85,9 @@ nukkit:
 
 ### dev nsplugin
 [nsplugin-doc](nsplugin-doc.en.md)
+
+### version
+|  ver  | spring-boot |         pnx          |
+|:-----:|:-----------:|:--------------------:|
+| 0.1.x |    2.7.2    |     1.6.0.0-PNX      |
+| 0.2.x |    3.1.5    |      1.20.40-r1      |

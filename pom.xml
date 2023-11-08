@@ -11,7 +11,7 @@
 
     <groupId>cc.wanforme.nukkit</groupId>
     <artifactId>pnx-spring-boot-starter</artifactId>
-    <version>0.1.1</version>
+    <version>0.2.0</version>
 
 
     <name>pnx-spring-boot-starter</name>
@@ -36,9 +36,11 @@
         <java.version>17</java.version>
         <!-- <log4j-to-slf4j.version>2.11.1</log4j-to-slf4j.version>  -->
         
-        <spring-boot.version>2.7.2</spring-boot.version>
+        <spring-boot.version>3.1.5</spring-boot.version>
         <!--<slf4j.version>1.7.36</slf4j.version>-->
-        <powernukkitx.version>1.6.0.0-PNX</powernukkitx.version>
+        <powernukkitx.version>1.20.40-r1</powernukkitx.version>
+        <!-- @see spring-boot-starter-log4j2 -->
+        <log4j2.version>2.17.1</log4j2.version>
     </properties>
 
 
@@ -82,12 +84,17 @@
       <!-- -->
 
     <dependencies>
+        <dependency>
+            <groupId>cn.powernukkitx</groupId>
+            <artifactId>powernukkitx</artifactId>
+            <version>${powernukkitx.version}</version>
+        </dependency>
+
         <!-- SpringBoot自带slf4j，但 nukkit 使用的是 log4j -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
             <!--<version>${spring-boot.version}</version>-->
-            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
@@ -95,30 +102,44 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
-        <!-- 引入log4j2依赖-->  
+
+        <!-- 引入log4j2依赖
         <dependency>
-            <groupId>org.springframework.boot</groupId>  
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        
+            <version>2.7.17</version>
+        </dependency> -->
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <scope>provided</scope>
-            <optional>true</optional>
         </dependency>
-        
+
+<!--            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-slf4j-impl</artifactId>
+                </exclusion>
+                <exclusion>
+	                <groupId>org.apache.logging.log4j</groupId>
+                	<artifactId>log4j-slf4j18-impl</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
-            <groupId>cn.powernukkitx</groupId>
-            <artifactId>powernukkitx</artifactId>
-            <version>${powernukkitx.version}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
+	        <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j18-impl</artifactId>
+            <version>2.18.0</version>
         </dependency>
-        
+        -->
     </dependencies>
 
     <build>
