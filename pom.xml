@@ -34,13 +34,9 @@
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.compilerVersion>17</maven.compiler.compilerVersion>
         <java.version>17</java.version>
-        <!-- <log4j-to-slf4j.version>2.11.1</log4j-to-slf4j.version>  -->
         
         <spring-boot.version>3.1.5</spring-boot.version>
-        <!--<slf4j.version>1.7.36</slf4j.version>-->
         <powernukkitx.version>1.20.40-r1</powernukkitx.version>
-        <!-- @see spring-boot-starter-log4j2 -->
-        <log4j2.version>2.17.1</log4j2.version>
     </properties>
 
 
@@ -88,34 +84,7 @@
             <groupId>cn.powernukkitx</groupId>
             <artifactId>powernukkitx</artifactId>
             <version>${powernukkitx.version}</version>
-        </dependency>
-
-        <!-- SpringBoot自带slf4j，但 nukkit 使用的是 log4j -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <!--<version>${spring-boot.version}</version>-->
             <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- 引入log4j2依赖
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
-            <version>2.7.17</version>
-        </dependency> -->
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-
-<!--            <exclusions>
                 <exclusion>
                     <groupId>org.apache.logging.log4j</groupId>
                     <artifactId>log4j-api</artifactId>
@@ -124,22 +93,31 @@
                     <groupId>org.apache.logging.log4j</groupId>
                     <artifactId>log4j-core</artifactId>
                 </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- SpringBoot自带slf4j，但 nukkit 使用的是 log4j -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
                 <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-slf4j-impl</artifactId>
-                </exclusion>
-                <exclusion>
-	                <groupId>org.apache.logging.log4j</groupId>
-                	<artifactId>log4j-slf4j18-impl</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!-- slf4j + log4j2 -->
         <dependency>
-	        <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j18-impl</artifactId>
-            <version>2.18.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
-        -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

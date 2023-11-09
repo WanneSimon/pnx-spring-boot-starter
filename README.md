@@ -22,10 +22,7 @@ SpringBoot starter for PowerNukkitX
 6. 支持在启动前保存内部资源到外部，例如预置插件。
 
 ### 使用
-~~安装到本地 maven~~
-~~mvn install~~
-  
-
+以下只做最简单的说明，请查看 [pnx-starter-demo](https://github.com/WanneSimon/pnx-starter-demo.git)
 #### 引入
 
 ```xml
@@ -44,11 +41,55 @@ SpringBoot starter for PowerNukkitX
   </repositories>
 
   <dependencies>
-    <dependency>
-      <groupId>cc.wanforme.nukkit</groupId>
-      <artifactId>pnx-spring-boot-starter</artifactId>
-      <version>0.1.0</version>
-    </dependency>
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter</artifactId>
+          <exclusions>
+              <exclusion>
+                  <groupId>org.springframework.boot</groupId>
+                  <artifactId>spring-boot-starter-logging</artifactId>
+              </exclusion>
+          </exclusions>
+      </dependency>
+    
+      <dependency>
+          <groupId>cc.wanforme.nukkit</groupId>
+          <artifactId>pnx-spring-boot-starter</artifactId>
+          <version>0.2.0</version>
+      </dependency>
+    
+      <!-- 引入 web 依赖则表示是 web 环境，同时需要修改 spring.main.web-application-type -->
+      <!--
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-web</artifactId>
+      </dependency>
+      -->
+    
+      <dependency>
+          <groupId>cn.powernukkitx</groupId>
+          <artifactId>powernukkitx</artifactId>
+          <version>${powernukkitx.version}</version>
+          <scope>provided</scope>
+          <exclusions>
+              <exclusion>
+                  <groupId>org.apache.logging.log4j</groupId>
+                  <artifactId>log4j-api</artifactId>
+              </exclusion>
+              <exclusion>
+                  <groupId>org.apache.logging.log4j</groupId>
+                  <artifactId>log4j-core</artifactId>
+              </exclusion>
+              <exclusion>
+                  <groupId>org.apache.logging.log4j</groupId>
+                  <artifactId>log4j-slf4j-impl</artifactId>
+              </exclusion>
+              <exclusion>
+                  <groupId>org.apache.logging.log4j</groupId>
+                  <artifactId>log4j-slf4j18-impl</artifactId>
+              </exclusion>
+          </exclusions>
+      </dependency>
   </dependencies>
 ```
 

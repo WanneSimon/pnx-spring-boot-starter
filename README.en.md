@@ -17,10 +17,8 @@ All `nukkit` below refer to `PowerNukkitX`
 5. Saving resources before running `nukkit`, such as plugins。
 
 ### Usage
+see [pnx-starter-demo](https://github.com/WanneSimon/pnx-starter-demo.git)
 
-~~#### Install pnx-spring-boot-starter~~
-~~I'm tring to upload to maven central.~~
-~~``` mvn install ```~~
 #### Import library
 ```xml
   <repositories>
@@ -38,13 +36,58 @@ All `nukkit` below refer to `PowerNukkitX`
   </repositories>
 
   <dependencies>
-    <dependency>
-      <groupId>cc.wanforme.nukkit</groupId>
-      <artifactId>pnx-spring-boot-starter</artifactId>
-      <version>0.1.0</version>
-    </dependency>
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter</artifactId>
+          <exclusions>
+              <exclusion>
+                  <groupId>org.springframework.boot</groupId>
+                  <artifactId>spring-boot-starter-logging</artifactId>
+              </exclusion>
+          </exclusions>
+      </dependency>
+    
+      <dependency>
+          <groupId>cc.wanforme.nukkit</groupId>
+          <artifactId>pnx-spring-boot-starter</artifactId>
+          <version>0.2.0</version>
+      </dependency>
+    
+      <!-- 引入 web 依赖则表示是 web 环境，同时需要修改 spring.main.web-application-type -->
+      <!--
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-web</artifactId>
+      </dependency>
+      -->
+    
+      <dependency>
+          <groupId>cn.powernukkitx</groupId>
+          <artifactId>powernukkitx</artifactId>
+          <version>${powernukkitx.version}</version>
+          <scope>provided</scope>
+          <exclusions>
+              <exclusion>
+                  <groupId>org.apache.logging.log4j</groupId>
+                  <artifactId>log4j-api</artifactId>
+              </exclusion>
+              <exclusion>
+                  <groupId>org.apache.logging.log4j</groupId>
+                  <artifactId>log4j-core</artifactId>
+              </exclusion>
+              <exclusion>
+                  <groupId>org.apache.logging.log4j</groupId>
+                  <artifactId>log4j-slf4j-impl</artifactId>
+              </exclusion>
+              <exclusion>
+                  <groupId>org.apache.logging.log4j</groupId>
+                  <artifactId>log4j-slf4j18-impl</artifactId>
+              </exclusion>
+          </exclusions>
+      </dependency>
   </dependencies>
 ```
+
 #### Run
 add `vm` option 
 ```
